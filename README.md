@@ -36,7 +36,7 @@
 `curl -H "X-API-Key: 0391b035-d01a-4edc-ac35-44afbcb92231"  http://localhost:8080/api/weather?city=Melbourne&country=Australia`
 
 * Use postman with parameters used above.
-* Use Swagger UI from `http://localhost:8080/swagger-ui/index.html`
+* Use Swagger UI from [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 
 ## Configuration
 
@@ -44,8 +44,9 @@ All the configurations are in the application.yml
 
 ### H2 Database
 
-The Console of the H2 Database is enabled, you can access it through `http://localhost:8080/h2-console`. The login
-information are set in the yaml file already.
+The Console of the H2 Database is enabled, you can access it
+through [http://localhost:8080/h2-console](http://localhost:8080/h2-console). The login information are set in the yaml
+file already.
 
 By current setting, the schema and pre-configured data is provisioned on application starts up through flyway. All the 5
 API keys are:

@@ -17,12 +17,17 @@ spring:
     locations: classpath:db/migration
     enabled: true
 
+
 open-weather-api:
   url: https://api.openweathermap.org/data/2.5/weather
   api-key: 000535eec377f4e21cc71e46d2d2bdd6
   units: metric
 
 app:
-  weather-refresh-minutes: 2
-  rate-limit-duration-minutes: 2
+  weather-data-expires-minutes: 120
+  rate-limit-duration-minutes: 60
   rate-limit-max-requests: 5
+
+logging:
+  level:
+    com.vanguard.weatherapi: info

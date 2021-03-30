@@ -19,7 +19,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
@@ -31,6 +30,7 @@ public class RateLimitAspect {
     private static final String API_KEY_HEADER = "X-API-Key";
     private final UserRepository userRepository;
     private final WeatherRequestRepository weatherRequestRepository;
+
     @Value("${app.rate-limit-duration-minutes}")
     private int rateLimitDurationMinutes;
 
@@ -44,6 +44,7 @@ public class RateLimitAspect {
     @Around("rateLimitAspect()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+
         String apiKey = request.getHeader(API_KEY_HEADER);
         User user = userRepository.getTopByApiKeyAndEnabledIsTrue(apiKey);
 
@@ -51,17 +52,16 @@ public class RateLimitAspect {
             throw new InvalidApiKeyException("Invalid API Key");
         }
 
-        OffsetDateTime limitStartTime = OffsetDateTime.now(ZoneOffset.UTC).minus(rateLimitDurationMinutes, ChronoUnit.HOURS);
+        weatherRequestRepository.save(WeatherRequest.builder()
+                .user(user)
+                .requestedOn(OffsetDateTime.now())
+                .build());
+
+        OffsetDateTime limitStartTime = OffsetDateTime.now().minus(rateLimitDurationMinutes, ChronoUnit.MINUTES);
         long totalRequested = weatherRequestRepository.countWeatherRequestByUserIsAndRequestedOnAfter(user, limitStartTime);
         if (totalRequested >= rateLimitMaxRequests) {
             throw new TooManyRequestException(String.format("Maximum %d requests per %d minutes", rateLimitMaxRequests, rateLimitDurationMinutes));
         }
-
-        weatherRequestRepository.save(WeatherRequest.builder()
-                .user(user)
-                .requestedOn(OffsetDateTime.now(ZoneOffset.UTC))
-                .build());
-
         return joinPoint.proceed();
     }
 }

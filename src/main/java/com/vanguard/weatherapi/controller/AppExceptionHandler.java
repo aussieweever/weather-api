@@ -15,7 +15,7 @@ public class AppExceptionHandler {
 
     @ExceptionHandler(CityNotFoundException.class)
     public ResponseEntity<ErrorDto> processCityNotFoundException(CityNotFoundException exception) {
-        return new ResponseEntity<ErrorDto>(new ErrorDto(exception.getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<ErrorDto>(new ErrorDto(exception.getMessage()), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(TooManyRequestException.class)

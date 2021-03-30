@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.stream.Collectors;
 
@@ -22,12 +21,12 @@ public class WeatherService {
     private final WeatherRepository weatherRepository;
     private final OpenWeatherService openWeatherService;
 
-    @Value("${app.weather-refresh-minutes}")
+    @Value("${app.weather-data-expires-minutes}")
     private long dataExpireMinutes;
 
     public WeatherDto getWeather(String city, String country) {
         log.info("Getting weather for city {} of country {}", city, country);
-        OffsetDateTime validBefore = OffsetDateTime.now(ZoneOffset.UTC).minus(dataExpireMinutes, ChronoUnit.MINUTES);
+        OffsetDateTime validBefore = OffsetDateTime.now().minus(dataExpireMinutes, ChronoUnit.MINUTES);
         Weather weather = weatherRepository.findTopByCityAndCountryOrderByUpdatedOnDesc(city, country);
 
         if (weather == null || weather.getUpdatedOn().isBefore(validBefore)) {
@@ -51,7 +50,7 @@ public class WeatherService {
                 // If there are multiple weather items, join the descriptions by comma
                 .description(openWeatherDataDto.getWeather().stream().map(WeatherData::getDescription)
                         .collect(Collectors.joining(",")))
-                .updatedOn(OffsetDateTime.now(ZoneOffset.UTC))
+                .updatedOn(OffsetDateTime.now())
                 .build();
         return weatherRepository.save(weather);
     }

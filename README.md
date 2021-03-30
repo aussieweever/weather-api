@@ -48,7 +48,7 @@ The Console of the H2 Database is enabled, you can access it through `http://loc
 information are set in the yaml file already.
 
 By current setting, the schema and pre-configured data is provisioned on application starts up through flyway. All the 5
-API key are:
+API keys are:
 
 - 0391b035-d01a-4edc-ac35-44afbcb92231
 - 399e82fd-64e6-45fe-8eed-23f5e80526ec

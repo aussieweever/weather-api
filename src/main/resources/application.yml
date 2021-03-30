@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:weatherdb;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+  flyway:
+    locations: classpath:db/migration
+    enabled: true
+
+open-weather-api:
+  url: https://api.openweathermap.org/data/2.5/weather
+  api-key: 000535eec377f4e21cc71e46d2d2bdd6
+  units: metric
+
+app:
+  weather-refresh-minutes: 2
+  rate-limit-duration-minutes: 2
+  rate-limit-max-requests: 5

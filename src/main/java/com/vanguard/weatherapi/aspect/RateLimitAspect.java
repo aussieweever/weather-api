@@ -59,7 +59,7 @@ public class RateLimitAspect {
 
         OffsetDateTime limitStartTime = OffsetDateTime.now().minus(rateLimitDurationMinutes, ChronoUnit.MINUTES);
         long totalRequested = weatherRequestRepository.countWeatherRequestByUserIsAndRequestedOnAfter(user, limitStartTime);
-        if (totalRequested > rateLimitMaxRequests) {
+        if (totalRequested >= rateLimitMaxRequests) {
             throw new TooManyRequestException(String.format("Maximum %d requests per %d minutes", rateLimitMaxRequests, rateLimitDurationMinutes));
         }
         return joinPoint.proceed();

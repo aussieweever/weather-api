@@ -1,6 +1,5 @@
 package com.vanguard.weatherapi.controller;
 
-import com.sun.istack.NotNull;
 import com.vanguard.weatherapi.annotation.RateLimit;
 import com.vanguard.weatherapi.dto.ErrorDto;
 import com.vanguard.weatherapi.dto.WeatherDto;
@@ -8,6 +7,7 @@ import com.vanguard.weatherapi.service.WeatherService;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.text.WordUtils;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -6,6 +6,7 @@ import com.vanguard.weatherapi.persistence.entity.User;
 import com.vanguard.weatherapi.persistence.entity.WeatherRequest;
 import com.vanguard.weatherapi.persistence.repository.UserRepository;
 import com.vanguard.weatherapi.persistence.repository.WeatherRequestRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -17,7 +18,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;

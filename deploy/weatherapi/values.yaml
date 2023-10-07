@@ -43,6 +43,8 @@ service:
   type: ClusterIP
   port: 80
   containerPort: 8080
+  initialDelaySeconds: 60
+  periodSeconds: 10
 
 ingress:
   enabled: true

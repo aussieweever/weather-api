@@ -31,3 +31,7 @@ app:
 logging:
   level:
     com.vanguard.weatherapi: info
+management:
+  endpoints:
+    web:
+      base-path: /

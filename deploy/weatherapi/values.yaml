@@ -8,7 +8,7 @@ image:
   repository: aussieweever/weather-api
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "2023100702"
 
 imagePullSecrets: []
 nameOverride: "weather-api"
